@@ -7,8 +7,6 @@ import routes from "./routes/index";
 
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-const password = encodeURIComponent(process.env.MONGODB_PASSWORD.trim());
-const connectionString = `mongodb+srv://HXu001:${password}@cluster0.r4pzwxn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const expressSession = require("express-session");
 
 var app = express();
