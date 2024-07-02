@@ -62,7 +62,7 @@ app.use("/", routes);
 console.log(`env:${app.get('env')}`);
 if (app.get("env") !== "test") {
     mongoose.connect(
-        connectionString,
+        "mongodb+srv://HXu001:Happy123@cluster0.r4pzwxn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
