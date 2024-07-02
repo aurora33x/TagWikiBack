@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Pull image from docker hub
         run: docker pull hazell3/tagwikibackend:latest
+      - name: Delete old container
+        run: docker rm -f nodejs-app-container  
       - name: Run Docker Container
         run: docker run -d -p 3001:3001 --name nodejs-app-container -e MONGODB_PASSWORD='${{ secrets.MONGODB_PASSWORD }}' hazell3/tagwikibackend
  

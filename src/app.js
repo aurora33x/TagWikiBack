@@ -10,7 +10,6 @@ var logger = require("morgan");
 const password = encodeURIComponent(process.env.MONGODB_PASSWORD.trim());
 const connectionString = `mongodb+srv://HXu001:${password}@cluster0.r4pzwxn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const expressSession = require("express-session");
-const allowedOrigins = ['http://localhost:3000', 'http://frontend.tagwiki.net'];
 
 var app = express();
 
@@ -53,13 +52,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: 'http://localhost:3000',
     credentials: true,
 }));
 
