@@ -9,7 +9,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const expressSession = require("express-session");
 
-var app = express();
+const app = express();
 
 require("dotenv").config();
 
@@ -20,9 +20,7 @@ const session = {
     saveUninitialized: false,
 };
 
-if (app.get("env") === "production") {
-    session.cookie.secure = true;
-}
+
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
