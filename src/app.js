@@ -50,7 +50,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors({
-    origin: 'http://http://52.63.163.196:3000',
+    origin: 'http://52.63.163.196:3000',
     credentials: true,
 }));
 
