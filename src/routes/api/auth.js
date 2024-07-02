@@ -7,7 +7,7 @@ const router = express.Router();
 const passport = require("passport");
 const querystring = require("querystring");
 
-const secret = "secret123";
+const secret = "secretidhere";
 
 require("dotenv").config();
 
@@ -16,23 +16,25 @@ require("dotenv").config();
  */
 
 router.post("/register", function (req, res) {
+  // Check if password exists in request body
+  if (!req.body.password) {
+    return res.status(400).json({ success: false, message: "Password is required" });
+  }
+
   let user = new User({
     email: req.body.email,
     username: req.body.username,
-    password: bcrypt.hashSync(req.body.password, 10),
+    password: bcrypt.hashSync(req.body.password, 10), // Hash password with 10 salt rounds
   });
 
   user.save(function (err, user) {
     if (err) {
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
-        message: "Your account could not be saved. Error: ",
-        err,
+        message: "Your account could not be saved. Error: " + err.message,
       });
-    } else {
-      res.set("Access-Control-Allow-Origin", "*");
-      res.json({ success: true, message: "Your account has been saved" });
     }
+    res.status(201).json({ success: true, message: "Your account has been saved" });
   });
 });
 
