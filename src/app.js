@@ -49,7 +49,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-const cors = require('cors');
+
 const corsOptions ={
     origin:'http://52.63.163.196:3000', 
     credentials:true,            //access-control-allow-credentials:true
