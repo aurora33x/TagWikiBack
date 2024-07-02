@@ -59,17 +59,19 @@ app.use(cors({
 app.use("/", routes);
 
 
-console.log(`env:${app.get('env')}`)
+console.log(`env:${app.get('env')}`);
 if (app.get("env") !== "test") {
     mongoose.connect(
         connectionString,
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true,
-            useFindAndModify: false
         }
-    );
+    ).then(() => {
+        console.log('MongoDB connected');
+    }).catch(err => {
+        console.error('MongoDB connection error:', err);
+    });
 }
 
 
