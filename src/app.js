@@ -58,7 +58,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 const corsOptions ={
-    origin:'http://52.63.163.196:3000', 
+    origin:'http://tagwiki.net', 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
