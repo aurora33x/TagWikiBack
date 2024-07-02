@@ -12,12 +12,7 @@ const password = encodeURIComponent(process.env.MONGODB_PASSWORD.trim());
 const connectionString = `mongodb+srv://HXu001:${password}@cluster0.r4pzwxn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 var app = express();
-app.use((_req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');
-  
-    next();
-  });
+
 require("dotenv").config();
 
 const session = {
@@ -57,11 +52,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-const corsOptions ={
-    origin:'http://tagwiki.net:3000, http://52.63.163.196:3000， http://tagwiki.net/', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
+const corsOptions = {
+    origin: [
+        'http://tagwiki.net:3000',
+        'http://52.63.163.196:3000',
+        'http://tagwiki.net'
+    ],
+    credentials: true,
+    optionSuccessStatus: 200
+};
 app.use(cors(corsOptions));
 
 app.use("/", routes);
