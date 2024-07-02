@@ -10,7 +10,12 @@ var logger = require("morgan");
 const expressSession = require("express-session");
 
 const app = express();
-
+app.use((_req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
+  
+    next();
+  });
 require("dotenv").config();
 
 const session = {
