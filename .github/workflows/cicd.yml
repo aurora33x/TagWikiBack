@@ -14,9 +14,9 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker Image
-        run: docker build -t integrationninjas/nodejs-app  .
+        run: docker build -t hazell3/tagwikibackend  .
       - name: Publish Image to docker hub
-        run: docker push hazell3/tagwikibackend
+        run: docker push hazell3/tagwikibackend:latest
  
   deploy:
     needs: build
