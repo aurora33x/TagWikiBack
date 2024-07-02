@@ -9,7 +9,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const expressSession = require("express-session");
 
-const app = express();
+var app = express();
 app.use((_req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', '*');
@@ -19,13 +19,15 @@ app.use((_req, res, next) => {
 require("dotenv").config();
 
 const session = {
-    secret: process.env.SESSION_SECRET,
+    secret: 'secretidhere',
     cookie: {},
     resave: false,
     saveUninitialized: false,
 };
 
-
+if (app.get("env") === "production") {
+    session.cookie.secure = true;
+}
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
