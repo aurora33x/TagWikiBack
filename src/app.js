@@ -5,10 +5,10 @@ import path from "path";
 import vote from "./routes/api/vote";
 import routes from "./routes/index";
 
-
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
+const password = encodeURIComponent(process.env.MONGODB_PASSWORD.trim());
+const connectionString = `mongodb+srv://HXu001:${password}@cluster0.r4pzwxn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const expressSession = require("express-session");
 
 var app = express();
@@ -62,7 +62,7 @@ app.use("/", routes);
 console.log(`env:${app.get('env')}`)
 if (app.get("env") !== "test") {
     mongoose.connect(
-        "mongodb+srv://HXu001:Happy123@cluster0.r4pzwxn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        connectionString,
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
