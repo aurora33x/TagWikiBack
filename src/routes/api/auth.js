@@ -48,7 +48,11 @@ router.post("/login", (req, res) => {
           { id: user._id, username: user.username },
           secret,
           (err, token) => {
-            res.status(200).cookie("token", token).send();
+            if (err) {
+              res.status(500).json({ message: "Failed to generate token" });
+            } else {
+              res.cookie("token", token, { httpOnly: true }).status(200).send();
+            }
           }
         );
       } else {
