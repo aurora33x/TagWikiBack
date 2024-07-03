@@ -6,7 +6,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const querystring = require("querystring");
-
+const saltRounds = 10;
 const secret = "secret123";
 
 require("dotenv").config();
@@ -15,24 +15,31 @@ require("dotenv").config();
  * Routes Definitions
  */
 
-router.post("/register", function (req, res) {
+router.post('/register', function(req, res) {
+  const { email, username, password } = req.body;
+
+  if (!password) {
+    return res.status(400).json({ success: false, message: "Password is required" });
+  }
+
+  // Hash the password securely
+  const hashedPassword = bcrypt.hashSync(password, saltRounds);
+
+  // Example of saving user with hashed password
   let user = new User({
-    email: req.body.email,
-    username: req.body.username,
-    password: bcrypt.hashSync(req.body.password, 10),
+    email: email,
+    username: username,
+    password: hashedPassword // Save the hashed password to your database
   });
 
-  user.save(function (err, user) {
+  user.save(function(err, user) {
     if (err) {
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
-        message: "Your account could not be saved. Error: ",
-        err,
+        message: "Your account could not be saved. Error: " + err.message,
       });
-    } else {
-      res.set("Access-Control-Allow-Origin", "*");
-      res.json({ success: true, message: "Your account has been saved" });
     }
+    res.status(201).json({ success: true, message: "Your account has been saved" });
   });
 });
 
