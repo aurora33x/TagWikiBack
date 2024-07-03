@@ -16,7 +16,7 @@ var app = express();
 require("dotenv").config();
 
 const session = {
-    secret: 'secretidhere',
+    secret: 'secret123',
     cookie: {},
     resave: false,
     saveUninitialized: false,

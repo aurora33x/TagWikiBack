@@ -16,25 +16,23 @@ require("dotenv").config();
  */
 
 router.post("/register", function (req, res) {
-  // Check if password exists in request body
-  if (!req.body.password) {
-    return res.status(400).json({ success: false, message: "Password is required" });
-  }
-
   let user = new User({
     email: req.body.email,
     username: req.body.username,
-    password: bcrypt.hashSync(req.body.password, 10), // Hash password with 10 salt rounds
+    password: bcrypt.hashSync(req.body.password, 10),
   });
 
   user.save(function (err, user) {
     if (err) {
-      return res.status(500).json({
+      res.status(500).json({
         success: false,
-        message: "Your account could not be saved. Error: " + err.message,
+        message: "Your account could not be saved. Error: ",
+        err,
       });
+    } else {
+      res.set("Access-Control-Allow-Origin", "*");
+      res.json({ success: true, message: "Your account has been saved" });
     }
-    res.status(201).json({ success: true, message: "Your account has been saved" });
   });
 });
 
@@ -48,11 +46,7 @@ router.post("/login", (req, res) => {
           { id: user._id, username: user.username },
           secret,
           (err, token) => {
-            if (err) {
-              res.status(500).json({ message: "Failed to generate token" });
-            } else {
-              res.cookie("token", token, { httpOnly: true }).status(200).send();
-            }
+            res.status(200).cookie("token", token).send();
           }
         );
       } else {
