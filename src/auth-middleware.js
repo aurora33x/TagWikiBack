@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "./model/user";
 require('dotenv').config();
 
-const { JWT_TOKEN_SECRET } = process.env;
+const { JWT_TOKEN_SECRET } = secret123;
 
 export const verifyUserAuth = async (req, res, next) => {
   const token = req.cookies.token;
