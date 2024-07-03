@@ -25,14 +25,15 @@ router.post('/create', verifyUserAuth, async (req, res) => {
       name: req.body.name,
       intro: req.body.intro,
       avatar: req.body.avatar,
-      memberId: [res.locals.user._id] // Assuming user ID is stored in res.locals.user._id
+      memberId: [res.locals.user._id], // Use res.locals.user._id from middleware
     });
 
-    res.status(HTTP_CREATED)
+    res.status(201)
       .header('Location', `/${newCommunity._id}`)
       .json(newCommunity);
   } catch (error) {
-    res.status(HTTP_INTERNAL_SERVER_ERROR).json({ error: 'Failed to create community' });
+    console.error('Failed to create community:', error);
+    res.status(500).json({ error: 'Failed to create community' });
   }
 });
 
