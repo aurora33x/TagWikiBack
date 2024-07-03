@@ -43,17 +43,21 @@ router.post('/register', function(req, res) {
   });
 });
 
-router.post("/login", (req, res) => {
+router.post('/login', async (req, res) => {
   const { username, password } = req.body;
-  
-  User.findOne({ username }).then((user) => {
+
+  try {
+    // Find user by username
+    const user = await User.findOne({ username });
+
+    // Check if user exists and verify password
     if (!user) {
-      return res.status(403).json("Invalid username or password");
+      return res.status(403).json({ message: 'Invalid username or password' });
     }
 
-    const passOk = bcrypt.compareSync(password, user.password);
-    if (!passOk) {
-      return res.status(403).json("Invalid username or password");
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(403).json({ message: 'Invalid username or password' });
     }
 
     // Generate JWT token
@@ -64,15 +68,16 @@ router.post("/login", (req, res) => {
     );
 
     // Set the token in cookie
-    res.cookie("token", token, {
+    res.cookie('token', token, {
       httpOnly: true, // Cookie cannot be accessed via client-side JavaScript
-      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-      sameSite: "strict" // Restrict cookie to same site requests
-    }).status(200).send("Login successful"); // Optionally, you can send additional data here
-  }).catch((err) => {
-    console.error("Login error:", err);
-    res.status(500).json("Internal server error");
-  });
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      sameSite: 'strict' // Restrict cookie to same site requests
+    }).send({ message: 'Login successful', token });
+
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 
