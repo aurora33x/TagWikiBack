@@ -7,7 +7,7 @@ const router = express.Router();
 const passport = require("passport");
 const querystring = require("querystring");
 
-const secret = "secretidhere";
+const secret = "secret123";
 
 require("dotenv").config();
 
