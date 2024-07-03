@@ -26,17 +26,17 @@ router.post('/upload', upload.single("image"), (req, res) => {
 
 });
 
-router.get('/images/:filename', (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    if (!file || file.length === 0) {
-      return res.status(404).json({ message: 'File not found' });
-    }
+// router.get('/images/:filename', (req, res) => {
+//   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+//     if (!file || file.length === 0) {
+//       return res.status(404).json({ message: 'File not found' });
+//     }
 
-    // Set the appropriate Content-Type and send the file
-    res.set('Content-Type', file.contentType);
-    const readstream = gfs.createReadStream(file.filename);
-    readstream.pipe(res);
-  });
-});
+//     // Set the appropriate Content-Type and send the file
+//     res.set('Content-Type', file.contentType);
+//     const readstream = gfs.createReadStream(file.filename);
+//     readstream.pipe(res);
+//   });
+// });
 
 export default router;
