@@ -55,7 +55,7 @@ app.use(express.static(path.join(__dirname, "public")));
 const corsOptions = {
     origin: [
         'http://tagwiki.net:3000',
-        'http://52.63.163.196:3000',
+        'http://3.106.134.8:3000',
         'http://tagwiki.net'
     ],
     credentials: true,
