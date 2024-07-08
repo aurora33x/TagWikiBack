@@ -56,7 +56,8 @@ const corsOptions = {
     origin: [
         'http://tagwiki.net:3000',
         'http://3.106.134.8:3000',
-        'http://tagwiki.net'
+        'http://tagwiki.net',
+        'http://www.tagwiki.net'
     ],
     credentials: true,
     optionSuccessStatus: 200
